@@ -1,0 +1,56 @@
+﻿@model SepetSistemi.Models.ViewModels.ProductListViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h1>Ürünlerimiz</h1>
+    </div>
+    <div class="card-body">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                @foreach (var product in Model.ProductListItems)
+                {
+                    <div class="col">
+                        <div class="card h-100">
+                            <img src="@product.Image" class="card-img-top" alt="...">
+                            <div class="card-header">
+                                <h5 class="card-title">@product.SKU: @product.Name</h5>
+                                <p class="text-muted">
+                                    Marka: @product.Brand
+                                </p>
+                                <p class="text-muted">
+                                    Kategori: @product.Category / @product.SubCategory
+                                </p>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    @if (product.IsInCampaign && product.CampaignRatio > 0 && product.CampaignRatio < 100)
+                                    {
+                                        <del class="text-danger">@product.Price</del>
+                                        <span class="text-success">@Html.Raw(product.Price * (100 - product.CampaignRatio))</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-success">@product.Price</span>
+                                    }
+                                </p>
+                                <hr />
+                                <small class="text-muted">Ölçü: @product.Size @product.SizeMeasurement</small><br />
+                                <small class="text-muted">Ağırlık: @product.Weight @product.WeightMeasurement</small><br />
+                                <small class="text-muted">Renk: @product.Color</small>
+                            </div>
+                            <div class="card-footer">
+                                <a href="#" class="btn btn-sm btn-primary">Sepete Ekle</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+            </div>
+        </div>
+    </div>
+</div>
